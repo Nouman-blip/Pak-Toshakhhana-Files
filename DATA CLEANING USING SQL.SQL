@@ -25,43 +25,23 @@ Delete FROM [tosha_kahana].[dbo].[Refined_TK_data ver 2]
 where Date is null or Remarks is null 
 
 
-DELETE from dbo.[Refined_TK_data ver 2]
-where Recipient_Name is null
+UPDATE [dbo].[Refined_TK_data ver 2]
+set Affiliation='Gen. Musharraf'
+where Affiliation='Gen Mus' or Affiliation='Gen. Musharrafarraf'
 
+UPDATE [dbo].[Refined_TK_data ver 2]
+set name_of_recipient='Mr.imran khan, Prime Minister of Pakistan'
+where name_of_recipient like '%Prime Minister%' and Affiliation='PTI'
 
-
--------------------------------------------------------------
--- Breaking out NAME_OF_RECIPIENT into Individual Columns 
-SELECT 
-     PARSENAME(REPLACE(Name_of_Recipient, ',', '.'), 2) AS [Recipient_Name]
-   , PARSENAME(REPLACE(Name_of_Recipient, ',', '.'), 1) AS [Assignation]
-   
-FROM [dbo].[Refined_TK_data ver 2]
-
-alter table [dbo].[Refined_TK_data ver 2]
-add Recipient_Name varchar(Max)
-
-update [dbo].[Refined_TK_data ver 2]
-set Recipient_Name=PARSENAME(REPLACE(Name_of_Recipient, ',', '.'), 2)
-
-alter table [dbo].[Refined_TK_data ver 2]
-add assignation varchar(Max)
-
-update [dbo].[Refined_TK_data ver 2]
-set assignation=PARSENAME(REPLACE(Name_of_Recipient, ',', '.'), 1)
-
-
-
+UPDATE [dbo].[Refined_TK_data ver 2]
+set Retained='none'
+where Retained='0'
 
 ------------------------------------------------------------------
 
---delete the UNUSED columns 
-Alter table [dbo].[Refined_TK_data ver 2]
-Drop column name_of_recipient
 
 
 
 
 
 
-select * from [dbo].[Refined_TK_data ver 2]
