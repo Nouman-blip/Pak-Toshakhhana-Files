@@ -34,67 +34,67 @@ where ranks<4
 
 --under millitary affiliation total gifts received by each leaders
 
-select  Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select  Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation='Military'
-group by  Name_of_recipient,Affiliation
+group by  Name_of_recipient,Affiliation,year(date)
 order by total_GIFTS desc
 
 -------------------------------------------------------------
 
 --under Gen musharaf affiliation total gifts received by each leaders
 
-select Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation like '%Gen%'
-group by Name_of_recipient,Affiliation
+group by Name_of_recipient,Affiliation,YEAR(date)
 order by total_GIFTS desc
 ---------------------------------------------------------------
 
 --under PTI affiliation total gifts received by each leaders
 
-select  Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select  Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation ='PTI'
-group by  Name_of_recipient,Affiliation
+group by  Name_of_recipient,Affiliation,YEAR(date)
 order by total_GIFTS desc
 
 ----------------------------------------------------------------
 --under Pmln affiliation total gifts received by each leaders
 
-select Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation ='PMLN'
-group by Name_of_recipient,Affiliation
+group by Name_of_recipient,Affiliation,year(date)
 order by total_GIFTS desc
 
 ----------------------------------------------------------------
 --under Ppp affiliation total gifts received by each leaders
 
-select Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation ='PPP'
-group by Name_of_recipient,Affiliation
+group by Name_of_recipient,Affiliation,year(date)
 order by total_GIFTS desc
 
 ----------------------------------------------------------------
 
 --under WITHOUT  affiliation total gifts received by each leaders
 
-select Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation ='NONE'
-group by Name_of_recipient,Affiliation
+group by Name_of_recipient,Affiliation,year(date)
 order by total_GIFTS desc
 
 ----------------------------------------------------------------
 
 --under media  affiliation total gifts received by each leaders
 
-select Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
+select Year(date) as years,Name_of_recipient,affiliation,count(detail_of_gifts) as total_GIFTS
 from  [dbo].[Refined_TK_data ver 2]
 where Affiliation ='media'
-group by Name_of_recipient,Affiliation
+group by Name_of_recipient,Affiliation,year(date)
 order by total_GIFTS desc
 
 
@@ -102,29 +102,29 @@ order by total_GIFTS desc
 
 --- former government's Foreign affairs minister gifts count 
 
-select Name_of_Recipient, affiliation, COUNT(detail_of_gifts) as gifts_count
+select Year(date) as years,Name_of_Recipient,COUNT(detail_of_gifts) as gifts_count
 from [dbo].[Refined_TK_data ver 2]
 where name_of_recipient like '%Foreign Affairs%'
-group by Name_of_Recipient,Affiliation
+group by Name_of_Recipient,year(date)
 order by gifts_count desc
 
 ----------------------------------------------------------------
 
 --- former government's prime minister minister gifts count 
 
-select Name_of_Recipient,Affiliation,COUNT(detail_of_gifts) as gifts_count
+select Year(date) as years,Name_of_Recipient,COUNT(detail_of_gifts) as gifts_count
 from [dbo].[Refined_TK_data ver 2]
 where name_of_recipient like '%Prime Minister of Pakistan%' 
-group by Name_of_Recipient,Affiliation
+group by Name_of_Recipient,year(date)
 order by gifts_count desc
 
 ----------------------------------------------------------------
 --- former government's president of pakistan gifts count 
 
-select Name_of_Recipient,Affiliation,COUNT(detail_of_gifts) as gifts_count
+select Year(date) as years,Name_of_Recipient,COUNT(detail_of_gifts) as gifts_count
 from [dbo].[Refined_TK_data ver 2]
 where name_of_recipient like '%President of Pakistan%' 
-group by Name_of_Recipient,Affiliation
+group by Name_of_Recipient,year(date)
 order by gifts_count desc
 
 ----------------------------------------------------------------
@@ -133,13 +133,14 @@ order by gifts_count desc
 
 -- Details of all gifts which were not retain, nor retain and either Retained means which were displayed, declared,broked.....etc.
 
-select detail_of_Gifts, retained
+select YEAR(Date) as years, detail_of_Gifts, retained
 from [dbo].[Refined_TK_data ver 2]
 where Retained <> 'Yes' and Retained <> 'No'and Retained <> 'Auctioned'
 
+
 --for auctioned
 
-select detail_of_Gifts, retained
+select YEAR(Date) as years,detail_of_Gifts, retained
 from [dbo].[Refined_TK_data ver 2]
 where Retained ='Auctioned'
 
@@ -149,10 +150,10 @@ where Retained ='Auctioned'
 
 select * from [dbo].[Refined_TK_data ver 2]
 
-select item_category, affiliation, count(Retention_Cost) as Rentention_cost
+select YEAR(date) as years,item_category, affiliation, count(Retention_Cost) as Rentention_cost
 from [dbo].[Refined_TK_data ver 2]
-group by Item_Category,Affiliation
-order by  Rentention_cost desc
+group by Item_Category,Affiliation,year(date)
+order by Rentention_cost desc
 
 ------------------------------------------------------------------------
 --- details of product yearly count gifts
@@ -172,3 +173,14 @@ group by Year(date)
 order by yearly_count_gifts desc
 
 ----------------------------------------------------------------------------
+-- general 
+select Year(date) as years,Name_of_recipient,Affiliation,count(detail_of_gifts) as total_GIFTS
+from  [dbo].[Refined_TK_data ver 2]
+group by Name_of_recipient,Affiliation,year(date)
+order by total_GIFTS desc
+
+select Year(date) as years,Name_of_recipient,count(detail_of_gifts) as total_GIFTS
+from  [dbo].[Refined_TK_data ver 2]
+where Name_of_Recipient like '%Prime of Pakistan%' or Name_of_Recipient like '%President of Pakistan%'
+group by Name_of_recipient,year(date)
+order by total_GIFTS desc
