@@ -10,20 +10,20 @@ from [dbo].[Refined_TK_data ver 2]
 group by detail_of_gifts
 ------------------------------------------------
 
---total assessed value by former governments
-select  sum(Assessed_Value) as total_value
+--total assessed value, total_gifts, total_unique_gifts,avg_retention_cost,by former governments
+select  count(Detail_of_Gifts) as Total_gifts,count(distinct Detail_of_Gifts) as Total_unique_gifts ,  sum(Assessed_Value) as Total_assessed_value, avg(Retention_Cost) as Avg_rentention_cost
 from [dbo].[Refined_TK_data ver 2]
 
 --------------------------------------------------
 --- Top 3 affiliation which has highest no of gifts 
 with highest_gift as 
-(select affiliation,count(detail_of_gifts) as highest
+(select affiliation,count(detail_of_gifts) as gifts
 from [dbo].[Refined_TK_data ver 2]
 group by Affiliation
 ),
 
  ranks1 as
-(select  Affiliation, highest, Rank() over( order by highest desc) ranks
+(select  Affiliation, gifts, Rank() over( order by gifts desc) ranks
 from highest_gift
 )
 
@@ -149,10 +149,10 @@ where Retained ='Auctioned'
 
 select * from [dbo].[Refined_TK_data ver 2]
 
-select item_category, affiliation, count(Retention_Cost) as total_cost
+select item_category, affiliation, count(Retention_Cost) as Rentention_cost
 from [dbo].[Refined_TK_data ver 2]
 group by Item_Category,Affiliation
-order by  total_cost desc
+order by  Rentention_cost desc
 
 ------------------------------------------------------------------------
 --- details of product yearly count gifts
